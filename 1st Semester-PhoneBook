@@ -1,0 +1,1236 @@
+#include<stdio.h>
+#include<string.h>
+#include<conio.h>
+#include<math.h>
+
+#define pf printf
+#define sf scanf
+#define ll long long int
+//Defining Structure;
+struct user
+{
+    char un[100];
+    char pas[50];
+};
+user db[1000];
+
+// Declaring Function;
+void line(int);
+void signup();
+int chkpas(char []);
+void login();
+void GameZone();
+void calc();
+void maxx();
+void minn();
+double avg();
+void addition();
+void subtraction();
+void multiplication();
+void division();
+void factorial();
+void fibonacci();
+void area_calc();
+void num_conv();
+void multi_table();
+void srt();
+void tri();
+void rec();
+void cir();
+void bintodec();
+void dectobin();
+void bintohex();
+void hextobin();
+void dectohex();
+void octtohex();
+void hextodec();
+void hextooct();
+int decide(char b[]);
+int c=1,k=0;
+char y;
+int main()
+{
+    char x;
+    strcpy(db[0].un,"jucse29.398@gmail.com");
+    strcpy(db[0].pas,"JUuni@398");
+    pf("Welcome to PHONEBOOK\n");
+    line(20);
+    pf("\nPress a to \"Create an Acoount\"\n");
+    pf("\nPress b to \"Log in\"\n");
+    pf("\nPress Q to exit\n");
+    sf("%c",&x);
+    if(x=='a')
+    {
+        pf("\nAccount Creation\n");
+        line(16);
+        signup();
+        pf("\nTo log in to your account Press b\nTo exit pressQ\n\n");
+        sf(" %c",&x);
+        if(x=='b')
+        {
+            login();
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
+    else if(x=='b')
+    {
+        login();
+    }
+    else if(x=='Q')
+    {
+        return 0;
+    }
+
+    pf("Success\n\n\n");
+}
+
+//Defining functions
+
+void line(int x)
+{
+    for(int i=0; i<x; i++)
+    {
+        pf("_");
+    }
+    pf("\n");
+}
+
+void signup()
+{
+start :
+    pf("\n");
+    user a;
+    char tn[100],tp[100];
+    pf("\nEnter Your Email Id\t : ");
+    sf(" %s",&tn);
+    pf("\nEnter Your Password\t : ");
+    sf(" %s",&tp);
+//c++;
+    for(int i=0; i<c; i++)
+    {
+        if(strcmp(db[i].un,tn)==0)
+        {
+            pf("\nThere is an account using this email.\n\n");
+            goto start;
+        }
+    }
+    int w=1;
+    while(w)
+    {
+check:
+        w=chkpas(tp);
+        if(w)
+        {
+            pf("\nEnter Your Password\t : ");
+            sf(" %s",&tp);
+            goto check;
+        }
+        char tp1[50];
+        pf("\nRetype Your Password\t : ");
+        sf(" %s",&tp1);
+        w=1;
+        w=strcmp(tp,tp1);
+        if(w)
+        {
+            pf("\nPasswords do not match. Try again...\n");
+            pf("\nEnter Your Password\t : ");
+            sf(" %s",&tp);
+        }
+    }
+
+    strcpy(db[c].un,tn);
+    strcpy(db[c].pas,tp);
+    pf("\nAccount Created Successfully !!! \n\n");
+    pf("Your Credentials : \n");
+    line(18);
+    pf("\n\t Email ID\t : %s\n\t Password\t :%s\n\n",db[c].un,db[c].pas);
+    pf("Store this credential for log in purposes. Welcome to PHONEBOOK Family\n");
+    c++;
+}
+
+int chkpas(char n[])
+{
+    int p=0,q=0,r=0,s=0,t=0;
+    for(int i=0; i<strlen(n); i++)
+    {
+        if(strlen(n)>=6)
+        {
+            p=1;
+        }
+        if(n[i]>='a' && n[i]<='z')
+        {
+            q=1;
+        }
+        if(n[i]>='A' && n[i]<='Z')
+        {
+            r=1;
+        }
+        if(n[i]>='0' && n[i]<='9')
+        {
+            s=1;
+        }
+        if(n[i]=='.' || n[i]=='!' || n[i]=='@' || n[i]=='$' ||
+                n[i]=='*' || n[i]=='#' )
+        {
+            t=1;
+        }
+    }
+    if(p==1 && q==1 && r==1 && s==1 && t==1 )
+    {
+        return 0;
+    }
+    else
+    {
+        if(p==0)
+        {
+            pf("\t*Password length must be greater than 6\n");
+        }
+        if(q==0)
+        {
+            pf("\t*Password must contain at least one lower case letter\n");
+        }
+        if(r==0)
+        {
+            pf("\t*Password must contain at least one upper case letter\n");
+        }
+        if(s==0)
+        {
+            pf("\t*Password must contain at least one digit\n");
+        }
+        if(t==0)
+        {
+            pf("\t*Password must contain at least one special character : !,@,#,$,*\n");
+        }
+        pf("\n\n");
+        return 1;
+    }
+}
+void login()
+{
+    char x;
+    char usn[100],usp[50];
+    pf("\nLog in to your account :\n");
+    line(25);
+start2 :
+    pf("\nEmail\t\t: ");
+    sf(" %s",&usn);
+    pf("Password\t: ");
+    sf(" %s",&usp);
+    int f1=1,f2=1;
+    for(int i=0; i<c; i++)
+    {
+        if(strcmp(usn,db[i].un)==0)
+        {
+            f1=0;
+            if(strcmp(usp,db[i].pas)==0)
+            {
+                f2=0;
+                break;
+            }
+        }
+    }
+    pf("\n");
+    if(f1!=0)
+    {
+        pf("\t*There is no such mail\n\n");
+        goto start2;
+    }
+    else if(f2!=0)
+    {
+        pf("\t*Enter Correct Password\n\n");
+        goto start2;
+    }
+    else
+    {
+start3:
+        int f=1;
+        while(f)
+        {
+            pf("Welcome to EduBook !!!\n");
+            line(21);
+            pf("\nPress c for calculator\nPress g for GamesZone\nEnter Q to go to logout\n\n");
+            sf(" %c",&x);
+            if(x=='g')
+            {
+                pf("GamesZone :\n");
+                line(11);
+                f=0;
+                GameZone();
+                goto start3;
+            }
+            else if(x=='c')
+            {
+                f=0;
+                calc();
+                if(y=='B')
+                    goto start3;
+            }
+            else if(x=='Q')
+            {
+                f=0;
+                login();
+            }
+            else
+            {
+                pf("Enter Correct Key Again!!\n\n");
+            }
+        }
+    }
+}
+void GameZone()
+{
+start8:
+    char b[]= {"0123456789"};
+    char j;
+    pf("\n\tTic Tac Toe\n\t");
+    line(11);
+    pf("\tPlayer 1 = X\n");
+    pf("\tPlayer 2 = O\n");
+    int l=-1;
+    do
+    {
+        pf("\n");
+        pf(" %c\t| %c\t| %c\n",b[1],b[2],b[3]);
+        pf("-------------------------\n");
+        pf(" %c\t| %c\t| %c\n",b[4],b[5],b[6]);
+        pf("-------------------------\n");
+        pf(" %c\t| %c\t| %c\n",b[7],b[8],b[9]);
+        pf("\n\nPlayer %d :: Enter a digit = ",k%2+1);
+        int x;
+        if((k+1)%2)
+        {
+            char mrk='X';
+            sf("%d",&x);
+            b[x]=mrk;
+        }
+        else
+        {
+            char mrk='O';
+            sf("%d",&x);
+            b[x]=mrk;
+        }
+        l=decide(b);
+        k++;
+
+    }
+    while(l==-1);
+    k--;
+
+    pf("\n");
+    pf(" %c\t| %c\t| %c\n",b[1],b[2],b[3]);
+    pf("-------------------------\n");
+    pf(" %c\t| %c\t| %c\n",b[4],b[5],b[6]);
+    pf("-------------------------\n");
+    pf(" %c\t| %c\t| %c\n",b[7],b[8],b[9]);
+    if(l==1)
+    {
+        pf("Player %d has won the game.\n\n",k%2+1);
+    }
+    else
+    {
+        pf("\n\n\t---DRAW!!!---\n\n");
+    }
+    pf("\nWant to play again? Y/N\n");
+    sf(" %c",&j);
+    if(j=='Y')
+    {
+        b[0]='\0';
+        strcat(b,"0123456789");
+        k=0;
+        goto start8;
+    }
+
+}
+
+void calc()
+{
+start5:
+    pf("Calculator :\n");
+    line(12);
+    pf("\n");
+    pf("\ta. Max\n");
+    pf("\tb. Min\n");
+    pf("\tc. Avg\n");
+    pf("\td. Mean\n");
+    pf("\te. Addition\n");
+    pf("\tf. Subtraction\n");
+    pf("\tg. Multiplication\n");
+    pf("\th. Division\n");
+    pf("\ti. Factorial\n");
+    pf("\tj. Fibonacci\n");
+    pf("\tk. Area Calculator\n");
+    pf("\tl. Number Conversion\n");
+    pf("\tm. Multiplication table\n");
+    pf("\tn. Sort a list of elements\n");
+    pf("\to. Press 'B' to go to previous interface\n");
+    sf(" %c",&y);
+    if(y=='B')
+    {
+        return;
+    }
+    else if(y=='a')
+    {
+        maxx();
+        goto start5;
+    }
+    else if(y=='b')
+    {
+        minn();
+        goto start5;
+    }
+    else if(y=='c')
+    {
+        double r;
+        r=avg();
+        pf("\nAverage is %0.3lf\n\n",r);
+
+        goto start5;
+    }
+    else if(y=='d')
+    {
+        double r;
+        r=avg();
+        pf("\nMean is %0.3lf\n\n",r);
+
+        goto start5;
+    }
+    else if(y=='e')
+    {
+        addition();
+        goto start5;
+    }
+    else if(y=='f')
+    {
+        subtraction();
+        goto start5;
+    }
+    else if(y=='g')
+    {
+        multiplication();
+        goto start5;
+    }
+    else if(y=='h')
+    {
+        division();
+        goto start5;
+    }
+    else if(y=='i')
+    {
+        factorial();
+        goto start5;
+    }
+    else if(y=='j')
+    {
+        fibonacci();
+        goto start5;
+    }
+    else if(y=='k')
+    {
+        area_calc();
+        goto start5;
+    }
+    else if(y=='l')
+    {
+        num_conv();
+        goto start5;
+    }
+    else if(y=='m')
+    {
+        multi_table();
+        goto start5;
+    }
+    else if(y=='n')
+    {
+        srt();
+        goto start5;
+    }
+    else if(y=='o')
+    {
+    }
+    else
+    {
+        pf("Enter Correct key again\n\n");
+        goto start5;
+    }
+}
+
+void maxx()
+{
+    long long int n;
+    double ans=0;
+    pf("\nHow many numbers will you use as input : ");
+    sf("%lld",&n);
+    pf("Enter the numbers : ");
+    while(n--)
+    {
+        double q;
+        sf("%lf",&q);
+        if(q>ans)
+        {
+            ans=q;
+        }
+    }
+    if(ans-int(ans))
+    {
+        pf("\nMax element is %0.3lf\n\n",ans);
+    }
+    else
+    {
+        pf("\nMax element is %ld\n\n",int(ans));
+    }
+}
+void minn()
+{
+    long long int n;
+    double ans=INT_MAX;
+    pf("\nHow many numbers will you use as input : ");
+    sf("%lld",&n);
+    pf("Enter the numbers : ");
+    while(n--)
+    {
+        double q;
+        sf("%lf",&q);
+        if(q<ans)
+        {
+            ans=q;
+        }
+    }
+    if(ans-int(ans))
+    {
+        pf("\nMin element is %0.3lf\n\n",ans);
+    }
+    else
+    {
+        pf("\nMin element is %ld\n\n",int(ans));
+    }
+}
+double avg()
+{
+    pf("\nHow many number will you enter : ");
+    ll n;
+    double sum=0;
+    sf("%lld",&n);
+    pf("Enter the numbers : ");
+    for(ll i=0; i<n; i++)
+    {
+        ll x;
+        sf("%lld",&x);
+        sum=sum+x;
+    }
+    return sum/n;
+}
+void addition()
+{
+    long long int n;
+    double ans=0;
+    pf("\nHow many numbers will you use as input : ");
+    sf("%lld",&n);
+    pf("Enter the numbers : ");
+    while(n--)
+    {
+        double q;
+        sf("%lf",&q);
+        ans=ans+q;
+    }
+    if(int(ans)-ans)
+    {
+        pf("Addition result is : %0.3lf\n\n",ans);
+    }
+    else
+    {
+        pf("Addition result is : %lld\n\n",int(ans));
+    }
+}
+void subtraction()
+{
+    long long int n;
+    double ans=0,n1,n2;
+    pf("\nEnter 1st Number : ");
+    sf("%lf",&n1);
+    pf("Enter 2nd Number : ");
+    sf("%lf",&n2);
+    ans=n1-n2;
+    if(int(ans)-ans)
+    {
+        pf("Subtraction result is : %0.3lf\n\n",ans);
+    }
+    else
+    {
+        pf("Subtraction result is : %ld\n\n",int(ans));
+    }
+}
+void multiplication()
+{
+    long long int n;
+    double ans=1;
+    pf("\nHow many numbers will you use as input : ");
+    sf("%lld",&n);
+    pf("Enter the numbers : ");
+    while(n--)
+    {
+        double q;
+        sf("%lf",&q);
+        ans=ans*q;
+    }
+
+    if(int(ans)-ans)
+    {
+        pf("Multiplication result is : %0.3lf\n\n",ans);
+    }
+    else
+    {
+        pf("Multiplication result is : %ld\n\n",int(ans));
+    }
+}
+void division()
+{
+    double d1,d2,ans;
+    pf("Enter dividend : ");
+    sf("%lf",&d1);
+    pf("Enter divisor : ");
+    sf("%lf",&d2);
+    ans=d1*1.0/d2;
+    if(int(ans)-ans)
+    {
+        pf("Division result is : %0.3lf\n\n",ans);
+    }
+    else
+    {
+        pf("Division result is : %ld\n\n",int(ans));
+    }
+}
+void factorial()
+{
+    unsigned long long int n,ans=1;
+    pf("\nEnter the number for which you want to calculate factorial :");
+    sf("%llu",&n);
+    for(unsigned long long int i=1; i<=n; i++)
+    {
+        ans=ans*i;
+    }
+    pf("\nFactorial is %llu\n\n",ans);
+}
+void fibonacci()
+{
+    pf("\nEnter the number to get your fibonacci sequence : ");
+    unsigned ll n,ans;
+    sf("%llu",&n);
+    int a1=0,a2=1;
+    if(n==1)
+    {
+        pf("Your Sequence is : 0\n");
+    }
+    else if(n==2)
+    {
+        pf("Your Sequence is : 0 1\n\n");
+    }
+    else
+    {
+        pf("Your Sequence is : 0 1");
+        for(int i=2; i<n; i++)
+        {
+            ans=a1+a2;
+            pf(" %llu",ans);
+            a1=a2;
+            a2=ans;
+        }
+        pf("\n\n");
+    }
+}
+void area_calc()
+{
+start6:
+    pf("Area Calculator :\n");
+    line(17);
+    pf("\t\ta. Triangle\n");
+    pf("\t\tb. Rectangle\n");
+    pf("\t\tc. Circle\n");
+    pf("\t\td. Press 'B' to return to previous interface\n");
+    scanf(" %c",&y);
+    if(y=='a')
+    {
+        tri();
+        goto start6;
+    }
+    else if(y=='b')
+    {
+        rec();
+        goto start6;
+    }
+    else if(y=='c')
+    {
+        cir();
+        goto start6;
+    }
+    else if(y=='B')
+    {
+    }
+}
+void tri()
+{
+    double b,h,s,area,l;
+    pf("a. Base & height\n");
+    pf("b. Three sides\n");
+    sf(" %c",&y);
+    if(y=='a')
+    {
+        pf("\nEnter Base : ");
+        sf("%lf",&b);
+        pf("Enter Height : ");
+        sf("%lf",&h);
+        area=.5*b*h;
+        pf("Area of triangle is = %0.3lf\n\n",area);
+    }
+    else
+    {
+        pf("\nEnter the three sides of triangle : ");
+        sf("%lf %lf %lf",&b,&h,&s);
+        l=(b+h+s)/2.0;
+        area=sqrt(l*(l-h)*(l-b)*(l-s));
+        pf("Area of triangle is = %0.3lf\n\n",area);
+
+    }
+}
+void rec()
+{
+    double a1,a2;
+    pf("\nEnter width and breadth of rectangle : ");
+    sf("%lf %lf",&a1,&a2);
+    pf("Area of Rectangle is = %0.3lf\n\n",a1*a2);
+}
+void cir()
+{
+    double r;
+    pf("\nEnter radius of circle : ");
+    sf("%lf",&r);
+    pf("Area of circle is %0.3lf\n\n",3.1416*pow(r,2));
+}
+
+void num_conv()
+{
+start7:
+    pf("Number Converter :\n");
+    line(18);
+    pf("\t\ta. Binary to Decimal\n");
+    pf("\t\tb. Decimal to Binary\n");
+    pf("\t\tc. Binary to Hexadecimal\n");
+    pf("\t\td. Hexadecimal to Binary\n");
+    pf("\t\te. Decimal to Hexadecimal\n");
+    pf("\t\tf. Hexadecimal to Decimal\n");
+    pf("\t\tg. Octal to Hexadecimal\n");
+    pf("\t\th. Hexadecimal to Octal\n");
+    pf("\t\ti. Press 'B' to return to previous interface\n");
+    scanf(" %c",&y);
+    if(y=='a')
+    {
+        bintodec();
+        goto start7;
+    }
+    else if(y=='b')
+    {
+        dectobin();
+        goto start7;
+    }
+    else if(y=='c')
+    {
+        bintohex();
+        goto start7;
+    }
+    else if(y=='d')
+    {
+        hextobin();
+        goto start7;
+    }
+    else if(y=='e')
+    {
+        dectohex();
+        goto start7;
+    }
+    else if(y=='f')
+    {
+        hextodec();
+        goto start7;
+    }
+    else if(y=='g')
+    {
+        octtohex();
+        goto start7;
+    }
+    else if(y=='h')
+    {
+        hextooct();
+        goto start7;
+    }
+
+}
+void bintodec()
+{
+    char a[100];
+    ll x=0;
+    pf("\nEnter your binary number : ");
+    scanf("%s",a);
+    int n=strlen(a);
+    for(ll i=0; i<n; i++)
+    {
+        int p = a[i]-'0';
+        x=x+p*pow(2,n-i-1);
+    }
+    printf("Decimal : %lld\n\n",x);
+}
+void dectobin()
+{
+    ll x=0,a,k=0;
+    int p[1000];
+    pf("\nEnter your Decimal number : ");
+    scanf("%lld",&a);
+    while(a)
+    {
+        p[k++]=a%2;
+        a=a/2;
+    }
+    pf("Binary : ");
+    for(int i=k-1; i>=0; i--)
+    {
+        printf("%d",p[i]);
+    }
+    pf("\n\n");
+}
+void bintohex()
+{
+    char a[100],hex[100];
+    ll x=0,k=0;
+    pf("\nEnter your binary number : ");
+    scanf("%s",a);
+    int n=strlen(a);
+    for(ll i=0; i<n; i++)
+    {
+        int p = a[i]-'0';
+        x=x+p*pow(2,n-i-1);
+    }
+    while(x)
+    {
+        int rem = x%16;
+        x=x/16;
+        if(rem==10)
+        {
+            hex[k++]='A';
+        }
+        else if(rem == 11)
+        {
+            hex[k++]='B';
+        }
+        else if(rem==12)
+        {
+            hex[k++]='C';
+        }
+        else if(rem==13)
+        {
+            hex[k++]='D';
+        }
+        else if(rem==14)
+        {
+            hex[k++]='E';
+        }
+        else if(rem==15)
+        {
+            hex[k++]='F';
+        }
+        else
+        {
+            hex[k++]='0'+rem;
+        }
+    }
+    pf("Hexadecimal : ");
+    for(int i=k-1; i>=0; i--)
+    {
+        pf("%c",hex[i]);
+    }
+    pf("\n\n");
+}
+void hextobin()
+{
+    char in[100];
+    char out[200];
+    pf("\nEnter your hexadecimal number : ");
+    sf(" %s",in);
+    for(int i=0; i<strlen(in); i++)
+    {
+        if(in[i]=='0')
+        {
+            pf("0000");
+        }
+        else if(in[i]=='1')
+        {
+            pf("0001");
+        }
+        else if(in[i]=='2')
+
+        {
+
+            pf("0010");
+
+        }
+
+        else if(in[i]=='3')
+
+        {
+
+            pf("0011");
+
+        }
+
+        else if(in[i]=='4')
+
+        {
+
+            pf("0100");
+
+        }
+
+        else if(in[i]=='5')
+
+        {
+
+            pf("0101");
+
+        }
+
+        else if(in[i]=='6')
+
+        {
+
+            pf("0110");
+
+        }
+
+        else if(in[i]=='7')
+
+        {
+
+            pf("0111");
+
+        }
+
+        else if(in[i]=='8')
+
+        {
+
+            pf("1000");
+
+        }
+
+        else if(in[i]=='9')
+
+        {
+
+            pf("1001");
+
+        }
+
+        else if(in[i]=='A')
+
+        {
+
+            pf("1010");
+
+        }
+
+        else if(in[i]=='B')
+
+        {
+
+            pf("1011");
+
+        }
+
+        else if(in[i]=='C')
+
+        {
+
+            pf("1100");
+
+        }
+
+        else if(in[i]=='D')
+
+        {
+
+            pf("1101");
+
+        }
+
+        else if(in[i]=='E')
+
+        {
+
+            pf("1110");
+
+        }
+        else if(in[i]=='F')
+        {
+            pf("1111");
+        }
+    }
+    pf("\n\n");
+}
+void dectohex()
+{
+    pf("\nEnter Decimal Number : ");
+    ll x=0,k=0;
+    char hex[200];
+    sf("%lld",&x);
+    while(x)
+    {
+        int rem = x%16;
+        x=x/16;
+        if(rem==10)
+        {
+            hex[k++]='A';
+        }
+        else if(rem == 11)
+        {
+            hex[k++]='B';
+        }
+        else if(rem==12)
+        {
+            hex[k++]='C';
+        }
+        else if(rem==13)
+        {
+            hex[k++]='D';
+        }
+        else if(rem==14)
+        {
+            hex[k++]='E';
+        }
+        else if(rem==15)
+        {
+            hex[k++]='F';
+        }
+        else
+        {
+            hex[k++]='0'+rem;
+        }
+    }
+    pf("Hexadecimal : ");
+    for(int i=k-1; i>=0; i--)
+    {
+        pf("%c",hex[i]);
+    }
+    pf("\n\n");
+}
+void octtohex()
+{
+    pf("\nEnter octal number : ");
+    ll x=0,k=0;
+    char a[200],hex[200];
+    sf("%s",a);
+    int n=strlen(a);
+    for(ll i=0; i<n; i++)
+    {
+        int p = a[i]-'0';
+        x=x+p*pow(8,n-i-1);
+    }
+    while(x)
+    {
+        int rem = x%16;
+        x=x/16;
+        if(rem==10)
+        {
+            hex[k++]='A';
+        }
+        else if(rem == 11)
+        {
+            hex[k++]='B';
+        }
+        else if(rem==12)
+        {
+            hex[k++]='C';
+        }
+        else if(rem==13)
+        {
+            hex[k++]='D';
+        }
+        else if(rem==14)
+        {
+            hex[k++]='E';
+        }
+        else if(rem==15)
+        {
+            hex[k++]='F';
+        }
+        else
+        {
+            hex[k++]='0'+rem;
+        }
+    }
+    pf("Hexadecimal : ");
+    for(int i=k-1; i>=0; i--)
+    {
+        pf("%c",hex[i]);
+    }
+    pf("\n\n");
+}
+void hextodec()
+{
+    char hex[200];
+    int res []= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+    ll x=0,p;
+    pf("\nEnter Hexadecimal Number : ");
+    sf(" %s",hex);
+    int n=strlen(hex);
+    for(int i=0; i<n; i++)
+    {
+        if(hex[i]>='A' && hex[i]<='F')
+        {
+            p=res[hex[i]-'A'+10];
+        }
+        else
+        {
+            p=hex[i]-'0';
+        }
+        x=x+p*pow(16,n-i-1);
+    }
+    pf("Decimal Number : %lld\n\n",x);
+}
+void hextooct()
+{
+    char hex[200];
+    int o[200];
+    int res []= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+    ll x=0,p,k=0;
+    pf("\nEnter Hexadecimal Number : ");
+    sf(" %s",hex);
+    int n=strlen(hex);
+    for(int i=0; i<n; i++)
+    {
+        if(hex[i]>='A' && hex[i]<='F')
+        {
+            p=res[hex[i]-'A'+10];
+        }
+        else
+        {
+            p=hex[i]-'0';
+        }
+        x=x+p*pow(16,n-i-1);
+    }
+    while(x)
+    {
+        o[k++]=x%8;
+        x=x/8;
+    }
+    pf("octal Number : ");
+    for(int i=k-1; i>=0; i--)
+    {
+        pf("%d",o[i]);
+    }
+    pf("\n\n");
+}
+
+void multi_table()
+{
+    int n;
+    pf("\nEnter the number for multiplication table : ");
+    sf("%d",&n);
+    for(int i=1; i<=10; i++)
+    {
+        pf("%3d x%3d = %3d\n",n,i,i*n);
+    }
+    pf("\n");
+}
+void srt()
+{
+    pf("\nEnter the number of elements : ");
+    int n;
+    sf("%d",&n);
+    int ar[n];
+    pf("Enter elements : ");
+    for(int i=0; i<n; i++)
+    {
+        sf("%d",&ar[i]);
+    }
+    pf("\n1. Ascending");
+    pf("\n0. Descending\n");
+    int u;
+    sf("%d",&u);
+    for(int i=0; i<n-1; i++)
+    {
+        for(int j=i+1; j<n; j++)
+        {
+            if(u)
+            {
+                if(ar[i]>ar[j])
+                {
+                    int t=ar[i];
+                    ar[i]=ar[j];
+                    ar[j]=t;
+
+                }
+            }
+            else
+            {
+                if(ar[i]<ar[j])
+                {
+                    int t=ar[i];
+                    ar[i]=ar[j];
+                    ar[j]=t;
+
+                }
+            }
+        }
+    }
+    pf("\nSorted list is : ");
+    for(int i=0; i<n; i++)
+    {
+        pf("%d ",ar[i]);
+    }
+    pf("\n\n");
+}
+int decide(char b[])
+{
+    if(b[1]==b[2] && b[2]==b[3])
+    {
+        return 1;
+    }
+    else if(b[4]==b[5] && b[5]==b[6])
+    {
+        return 1;
+    }
+    else if (b[7]==b[8] && b[8]==b[9])
+    {
+        return 1;
+    }
+    else if (b[1]==b[4] && b[4]==b[7])
+    {
+        return 1;
+    }
+    else if(b[2]==b[5] && b[5]==b[8])
+    {
+        return 1;
+    }
+    else if(b[3]==b[6] && b[6]==b[9])
+    {
+        return 1;
+    }
+    else if(b[1]==b[5] && b[5]==b[9])
+    {
+        return 1;
+    }
+    else if(b[3]==b[5] && b[5]==b[7])
+    {
+        return 1;
+    }
+    else if(b[1]!= '1' && b[2]!= '2' && b[3]!= '3' && b[4]!= '4'&&
+            b[5]!= '5' && b[6]!= '6'&& b[7]!= '7' && b[8]!= '8' && b[9]!='9')
+    {
+        return 0;
+    }
+    else
+    {
+        return -1;
+    }
+}
